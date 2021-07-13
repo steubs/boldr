@@ -1,36 +1,48 @@
 import { Info } from './AppStyles';
 import ReactPlayer from 'react-player';
 import '@tensorflow/tfjs-backend-webgl'
+import '@mediapipe/pose'
 import * as poseDetection from '@tensorflow-models/pose-detection'
 import { Pose, POSE_CONNECTIONS, LandmarkGrid, PoseConfig, landmarkContainer } from '@mediapipe/pose'
-import { useState, useEffect } from 'react';
 
-const App = () => {
+import React, { Component, useState, useEffect } from 'react';
 
-  const [detector, setDetector] = useState();
-  const [video, setVideo] = useState();
-  const [poses, setPoses] = useState([]);
-  const [pose, setPose] = useState([0]);
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.vidRef = React.createRef();
+    this.state = {
+      detector: null,
+      video: null,
+      poses: []
+    };
+  }
+  async componentDidMount() {
+    const getDetector = await poseDetection.createDetector(poseDetection.SupportedModels.BlazePose, { runtime: 'mediapipe' });
 
-  useEffect(() => {
-    //TODO: read about this
-    //https://reactjs.org/docs/concurrent-mode-suspense.html
-    async function buildPose() {
-      setDetector(await poseDetection.createDetector(poseDetection.SupportedModels.BlazePose, { runtime: 'tfjs' }))
-      setVideo(document.getElementById('video'));
-      setPoses([...await detector.estimatePoses(video)]);
-      setPose([...poses[0].keypoints])
-    }
-    buildPose();
-  }, [])
-  return (
-    <div className="App">
-      <ReactPlayer url='https://www.youtube.com/watch?v=dQw4w9WgXcQ&html5=True' />
-      <Info>
-        Coords: {pose[0]}
-      </Info>
-    </div>
-  );
+    //const getDetector = await poseDetection.createDetector(poseDetection.SupportedModels.BlazePose, { runtime: 'tfjs' });
+    this.setState((state) => ({
+      detector: getDetector,
+      video: this.vidRef.current
+    }));
+    console.log();
+  }
+  async componentDidUpdate() {
+    const getPoses = await detector.estimatePoses(video);
+    this.setState((state) => ({
+      poses: getPoses
+    }));
+  }
+  render() {
+    return (
+      <div className="App">
+        <ReactPlayer ref={this.vidRef} url='https://www.youtube.com/watch?v=dQw4w9WgXcQ&html5=True' />
+        <Info>
+
+        </Info>
+      </div>
+    );
+  };
 }
 
 export default App;
