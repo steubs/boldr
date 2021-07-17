@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mediapipe/camera_utils": "^0.3.1620247984",
+    "@mediapipe/drawing_utils": "^0.3.1620248257",
+    "@mediapipe/holistic": "^0.4.1625245411",
     "@mediapipe/pose": "^0.4.1624666670",
     "@tensorflow-models/pose-detection": "^0.0.3",
     "@tensorflow/tfjs-backend-webgl": "^3.7.0",
@@ -18,7 +21,9 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-player": "^2.9.0",
-    "styled-components": "^5.3.0"
+    "react-webcam": "^5.2.4",
+    "styled-components": "^5.3.0",
+    "typescript": "^4.3.5"
   },
   "devDependencies": {
     "eslint": "7.30.0",
