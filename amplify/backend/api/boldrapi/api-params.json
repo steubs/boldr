@@ -1,0 +1,35 @@
+{
+  "paths": [
+    {
+      "name": "/items",
+      "lambdaFunction": "analyzeEntry",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/items"
+    }
+  ],
+  "resourceName": "boldrapi",
+  "apiName": "boldrapi",
+  "functionArns": [
+    {
+      "lambdaFunction": "analyzeEntry"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-amplify135e565ce10b4-staging-223515-authRole",
+    "unAuthRoleName": "amplify-amplify135e565ce10b4-staging-223515-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "analyzeEntry",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}
